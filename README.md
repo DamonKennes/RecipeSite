@@ -11,10 +11,12 @@
 1. Install docker desktop
 2. Install php (>= 8.0)
 3. Clone repo
-4. Run `./vendor/bin/sail up` in folder (takes a LONG time at first install to pull in docker images)
-5. Browse to localhost in browser to view website (to view changes to Vue files, also run `./vendor/bin/sail npm run dev` in different terminal tab)
-6. To create the required database tables, run `./vendor/bin/sail artisan migrate`
-7. To populate database, you can use TablePlus to connect to the mysql docker image:
+4. Install composer (https://getcomposer.org/download/) in folder
+5. Run `composer install` in folder to install packages
+6. Run `./vendor/bin/sail up` in folder to run docker image (takes a LONG time at first install to pull in docker images)
+7. Browse to localhost in browser to view website (to view changes to Vue files, also run `./vendor/bin/sail npm run dev` in different terminal tab)
+8. To create the required database tables, run `./vendor/bin/sail artisan migrate`
+9. To populate database, you can use TablePlus to connect to the mysql docker image:
    - DB_CONNECTION=mysql
    - DB_HOST=mysql
    - DB_PORT=3306
