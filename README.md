@@ -13,7 +13,8 @@
 3. Clone repo
 4. Run `./vendor/bin/sail up` in folder (takes a LONG time at first install to pull in docker images)
 5. Browse to localhost in browser to view website (to view changes to Vue files, also run `./vendor/bin/sail npm run dev` in different terminal tab)
-6. To populate database, you can use TablePlus to connect to the mysql docker image:
+6. To create the required database tables, run `./vendor/bin/sail artisan migrate`
+7. To populate database, you can use TablePlus to connect to the mysql docker image:
    - DB_CONNECTION=mysql
    - DB_HOST=mysql
    - DB_PORT=3306
