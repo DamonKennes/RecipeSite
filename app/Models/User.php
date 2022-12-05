@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function recipes(){
         return $this->belongsToMany(Recipe::class)->withPivot('rating');
     }
+
+    public function recommended(){
+        return $this->belongsToMany(Recipe::class, 'recommendations')->withPivot(['certainty', 'image_url']);
+    }
 }

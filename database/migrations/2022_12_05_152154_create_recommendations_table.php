@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('recipe_user', function (Blueprint $table) {
-            $table->foreignId('user_id');
+        Schema::create('recommendations', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('recipe_id')->constrained();
-            $table->tinyInteger('rating');
+            $table->string('image_url');
+            $table->tinyInteger('certainty');
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe_user');
+        Schema::dropIfExists('recommendations');
     }
 };

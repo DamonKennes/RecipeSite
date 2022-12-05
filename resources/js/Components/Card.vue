@@ -5,7 +5,7 @@
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2">{{name}}</div>
       </div>
-      <Stars :initial-rating="score" :read-only="true"></Stars>
+      <Stars :initial-rating="score" @change-rating="updateRating"></Stars>
     </div>
   </div>
 </template>
@@ -15,6 +15,7 @@
 //import StarRating from 'vue-star-rating';
 
 import Stars from "@/Components/Stars.vue";
+import {Inertia} from "@inertiajs/inertia";
 export default {
   name: 'Card',
   components: {
@@ -24,12 +25,15 @@ export default {
     name: String,
     score: Number,
     image: String,
-    href: String,
+    id: Number,
   },
   methods: {
     onClick() {
       this.$emit('open-recipe');
     },
+      updateRating (val){
+          Inertia.patch('/recipes/' + this.id, {rating: val});
+      }
   },
 };
 </script>

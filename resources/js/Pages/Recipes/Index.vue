@@ -122,13 +122,24 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div v-if="!search">
-                                <h1 class="text-lg text-grey">Recommended</h1>
-                                <card v-for="recipe in recommendations"
-                                      :name="recipe.name"
+                                <h1 class="text-lg text-grey">Favourites</h1>
+                                <card v-for="recipe in favourites.data"
+                                    :name="recipe.name"
+                                    :score="recipe.pivot.rating"
+                                      :id="recipe.id"
                                       :image="recipe.image_url"
-                                      :score="3"
                                       @open-recipe="openRecipe(recipe)"
-                                ></card>
+                                >
+                                </card>
+                                <h1 class="text-lg text-grey">Recommended</h1>
+                                <card-with-info v-for="recipe in recommendations.data"
+                                      :name="recipe.name"
+                                      :image-recipe="recipe.image_url"
+                                      :image-graf="'/storage/' + recipe.pivot.image_url"
+                                      :score="0"
+                                                :id="recipe.id"
+                                      @open-recipe="openRecipe(recipe)"
+                                ></card-with-info>
                                 </div>
                             <div v-else>
                                 <h1 class="text-lg text-grey">Search results</h1>
@@ -156,16 +167,21 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import SearchBar from "@/Components/SearchBar.vue";
 import Card from "@/Components/Card.vue";
+import CardWithInfo from "@/Components/CardWithInfo.vue";
 export default {
     name: "Index",
-    components: {Card, Head, Link, ResponsiveNavLink, ApplicationLogo, DropdownLink, Dropdown, SearchBar},
+    components: {CardWithInfo, Card, Head, Link, ResponsiveNavLink, ApplicationLogo, DropdownLink, Dropdown, SearchBar},
     props: {
         results: {
             type: Object,
             default: () => ({}),
         },
         recommendations: {
-            type: Array,
+            type: Object,
+            default: () => ({}),
+        },
+        favourites: {
+            type: Object,
             default: () => ({}),
         }
     },

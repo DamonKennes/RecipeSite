@@ -17,7 +17,8 @@ class RecipeController extends Controller
     {
         return Inertia::render('Recipes/Index', [
             "results" => Recipe::search($request['query'])->paginate(15),
-            "recommendations" => Recipe::skip(5000)->take(5)->get(),
+            "recommendations" => $request->user()->recommended()->paginate(15),
+            "favourites" => $request->user()->recipes()->orderBy('pivot_rating', 'desc')->paginate(15),
         ]);
     }
 
@@ -49,6 +50,10 @@ class RecipeController extends Controller
             ]);
         }else{
             $recipe->users()->attach($request->user(), ['rating' => $request['rating']]);
+        }
+        $recommended = $request->user()->recommended()->whereId($recipe->id)->first();
+        if ($recommended){
+            $request->user()->recommended()->detach($recipe);
         }
         return redirect()->back();
     }

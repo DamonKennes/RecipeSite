@@ -4,14 +4,15 @@
       :image = imageRecipe
       :name = name
       :score = score
+      :id = id
       />
-      <GrafiekCard 
+      <GrafiekCard
       :image = imageGraf
        />
     </div>
 </template>
-  
-  
+
+
   <script>
   import Card from './Card.vue';
   import GrafiekCard from './GrafiekCard.vue';
@@ -27,11 +28,11 @@
         name: String,
         imageGraf: String,
         imageRecipe: String,
+        id: Number,
     },
     methods: {
       onClick() {
-        console.log('click');
-        //this.$emit('open-recipe');
+        this.$emit('open-recipe');
       },
     },
   };
