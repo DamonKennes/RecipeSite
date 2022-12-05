@@ -9,4 +9,8 @@ use Laravel\Scout\Searchable;
 class Recipe extends Model
 {
     use HasFactory, Searchable;
+
+    public function users(){
+        return $this->belongsToMany(User::class)->withPivot('rating');
+    }
 }

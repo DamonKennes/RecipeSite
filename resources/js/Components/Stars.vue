@@ -1,14 +1,16 @@
 <script>
-import StarIcon from "./StarIcon.vue";
+import StarIcon from "@/Components/StarIcon.vue";
 
 export default {
+    name: "Stars",
     data() {
         return {
-            rating: 0,
-            rated: false
+            rated: this.initialRating !== 0,
+            rating: this.initialRating,
         }
     },
     props: {
+        initialRating: {type: Number, default: 0},
         numberOfStars: { type: Number, default: 5 },
         activeColor: { type: String, default: "#ff9999" },
         inactiveColor: { type: String, default: "#555" },
@@ -37,7 +39,7 @@ export default {
         changeRating(i) {
             this.rated = true;
             this.rating = i+1;
-            // send to backend
+            this.$emit("change-rating", this.rating);
         },
         starColor(i) {
             return i <= this.rating;

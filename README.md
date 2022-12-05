@@ -7,15 +7,29 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## TODO:
+- Ingredients op detail page bug (Lara?)
+- Overkoepelende component voor weergeven array of cards (Damon?)
+- Welke rating tonen op recommended cards?
+- Hoe weergeven search results?
+- Recommender -> integreren via .py file
+  - Aanroepen -> via laravel queues (bij elke rating change)
+  - Lees alles uit sql tabel en stel SVD op
+  - FOR every user in users table (=echte users):
+    - Generate x (hoeveel?) recommendations
+    - Generate and export images
+    - Write to db table (which one), including filename for each reco image
+- Script om alle historische ratings data (eenmalig) in tabel te schrijven?
+
 ## Web app lokaal runnen met docker
-1. Install docker desktop
+1. Install docker desktop (eventueel met WSL op windows https://docs.docker.com/desktop/install/windows-install/)
 2. Install php (>= 8.0)
 3. Clone repo
 4. Install composer (https://getcomposer.org/download/) in folder
 5. Run `composer install` in folder to install packages
 6. Run `./vendor/bin/sail up` in folder to run docker image (takes a LONG time at first install to pull in docker images)
 7. Browse to localhost in browser to view website (to view changes to Vue files, also run `./vendor/bin/sail npm run dev` in different terminal tab)
-8. To create the required database tables, run `./vendor/bin/sail artisan migrate`
+8. To create (or update when changes) the required database tables, run `./vendor/bin/sail artisan migrate`
 9. To populate database, you can use TablePlus to connect to the mysql docker image:
    - DB_CONNECTION=mysql
    - DB_HOST=mysql

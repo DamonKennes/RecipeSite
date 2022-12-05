@@ -9,12 +9,12 @@
             </div>
 
             <input
-                class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                class="peer h-full w-full outline-none text-sm text-gray-700 pr-2 border-0"
                 type="text"
                 id="search"
                 placeholder="Search something.."
                 v-model="query"
-                @input="$emit('input', $event)"
+                @input="$emit('updated-value', query)"
             />
         </div>
     </div>
