@@ -19,14 +19,12 @@
 
 ## Web app lokaal runnen met docker
 1. Install docker desktop (eventueel met WSL op windows https://docs.docker.com/desktop/install/windows-install/)
-2. Install php (>= 8.0)
-3. Clone repo
-4. Install composer (https://getcomposer.org/download/) in folder
-5. Run `composer install` in folder to install packages (evt met flag --ignore-platform-reqs)
-6. Run `./vendor/bin/sail up` in folder to run docker image (takes a LONG time at first install to pull in docker images)
-7. Browse to localhost in browser to view website (to view changes to Vue files, also run `./vendor/bin/sail npm run dev` in different terminal tab)
-8. To create (or update when changes) the required database tables, run `./vendor/bin/sail artisan migrate`
-9. To populate database, you can use TablePlus to connect to the mysql docker image:
+2. Clone repo
+3. Install dependencies in folder using `docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html laravelsail/php81-composer:latest composer install --ignore-platform-reqs`
+4. Run `./vendor/bin/sail up` in folder to run docker image (takes a LONG time at first install to pull in docker images)
+5. Browse to localhost in browser to view website (to view changes to Vue files, also run `./vendor/bin/sail npm run dev` in different terminal tab)
+6. To create (or update when changes) the required database tables, run `./vendor/bin/sail artisan migrate`
+7. To populate database, you can use TablePlus to connect to the mysql docker image:
    - DB_CONNECTION=mysql
    - DB_HOST=mysql
    - DB_PORT=3306
