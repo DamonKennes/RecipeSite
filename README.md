@@ -31,6 +31,7 @@
    - DB_DATABASE=recipe_app_web
    - DB_USERNAME=sail
    - DB_PASSWORD=password
+8. After populating the database, generate the search indexes for the recipe table by running `sail artisan scout:import "App\Models\Recipe"`
 
 ## About Laravel
 
