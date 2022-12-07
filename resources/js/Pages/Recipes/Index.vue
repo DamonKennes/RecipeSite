@@ -122,15 +122,8 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div v-if="!search">
-                                <h1 class="text-lg text-grey">Favourites</h1>
-                                <card v-for="recipe in favourites.data"
-                                    :name="recipe.name"
-                                    :score="recipe.pivot.rating"
-                                      :id="recipe.id"
-                                      :image="recipe.image_url"
-                                      @open-recipe="openRecipe(recipe)"
-                                >
-                                </card>
+                                <Slider :data ="favourites.data" text = "Favourites">
+                                </Slider>
                                 <h1 class="text-lg text-grey">Recommended</h1>
                                 <card-with-info v-for="recipe in recommendations.data"
                                       :name="recipe.name"
@@ -158,6 +151,7 @@
 </template>
 
 <script>
+import VueHorizontal from "vue-horizontal";
 import { Head } from '@inertiajs/inertia-vue3';
 import { Link } from '@inertiajs/inertia-vue3';
 import {Inertia} from "@inertiajs/inertia";
@@ -167,10 +161,12 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import SearchBar from "@/Components/SearchBar.vue";
 import Card from "@/Components/Card.vue";
+import Slider from "@/Components/Slider.vue";
+
 import CardWithInfo from "@/Components/CardWithInfo.vue";
 export default {
     name: "Index",
-    components: {CardWithInfo, Card, Head, Link, ResponsiveNavLink, ApplicationLogo, DropdownLink, Dropdown, SearchBar},
+    components: {CardWithInfo, Card, Head, Link, ResponsiveNavLink, ApplicationLogo, DropdownLink, Dropdown, SearchBar, VueHorizontal, Slider},
     props: {
         results: {
             type: Object,
