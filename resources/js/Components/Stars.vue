@@ -12,8 +12,9 @@ export default {
     props: {
         initialRating: {type: Number, default: 0},
         numberOfStars: { type: Number, default: 5 },
-        activeColor: { type: String, default: "#ff9999" },
+        activeColor: { type: String, default: "#ff9900" },
         inactiveColor: { type: String, default: "#555" },
+        interactive: {type: Boolean, default: false}
     },
     computed: {
         emptyStars() {
@@ -50,7 +51,11 @@ export default {
 
 <template>
 <div>
-    <button v-for="(filled, index) in starList" :key="index" @click="changeRating(index)">
+    <button v-if="interactive" v-for="(filled, index) in starList" :key="index" @click="changeRating(index)">
+        <StarIcon v-if="filled" :color="activeColor" class="hover:shadow-inner hover:shadow-gray-400"></StarIcon>
+        <StarIcon v-else :color="inactiveColor" class="hover:shadow-inner hover:shadow-gray-400"></StarIcon>
+    </button>
+    <button v-else v-for="(filled, index) in starList" disabled>
         <StarIcon v-if="filled" :color="activeColor"></StarIcon>
         <StarIcon v-else :color="inactiveColor"></StarIcon>
     </button>
