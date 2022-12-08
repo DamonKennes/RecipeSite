@@ -1,13 +1,13 @@
 <template>
-  <div  class="p-10">
-    <div v-on:click="onClick()" class="max-w-sm rounded overflow-hidden shadow-lg">
+    <div class="p-4">
+    <div v-on:click="onClick()" class="w-60 rounded overflow-hidden shadow-lg h-full">
       <img class="w-full" v-bind:src = image alt="Pasta">
       <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2">{{name}}</div>
+          <div class="font-bold text-xl">{{name}}</div>
+          <Stars class="mt-auto" :initial-rating="score" @change-rating="updateRating"></Stars>
       </div>
-      <Stars :initial-rating="score" @change-rating="updateRating"></Stars>
     </div>
-  </div>
+    </div>
 </template>
 
 

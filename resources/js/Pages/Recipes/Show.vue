@@ -1,6 +1,5 @@
 <template>
-    <div class="flex md:justify-center">
-        <!-- back-button, but link might need to change -->
+    <div class="flex md:justify-center mb-4">
         <a @click="back" class="fixed left-0 top-0 m-3 md:px-1 hover:shadow-inner hover:shadow-gray-400 text-xl md:text-3xl font-bold">&larr;</a>
         <img :src="recipe.image_url" :alt="recipe.name" class="rounded-b-lg w-full md:w-auto">
     </div>
@@ -12,14 +11,14 @@
     </div>
     <div class="columns-1 md:columns-2 text-left items-start">
         <div class="p-6 md:pl-20 md:break-inside-avoid-column">
-            <h3 class="text-lg">Ingredients</h3>
+            <h3 class="text-lg font-semibold">Ingredients</h3>
             <hr/>
-            <ul class="list-disc list-outside"><li v-for="i in ingredients">{{i}}</li></ul>
+            <ul class="mt-4 list-disc list-inside"><li class="capitalize" v-for="i in ingredients">{{i}}</li></ul>
         </div>
         <div class="p-6 md:pr-20 md:break-inside-avoid-column">
-            <h3 class="text-lg">Instructions</h3>
+            <h3 class="text-lg font-semibold">Instructions</h3>
             <hr/>
-            <ol class="list-decimal list-outside"><li v-for="step in directions">{{step}}</li></ol>
+            <ol class="mt-4 list-decimal list-inside"><li class="mb-2" v-for="step in directions">{{step}}</li></ol>
         </div>
     </div>
 </template>
@@ -58,5 +57,7 @@ export default {
 </script>
 
 <style scoped>
-
+ol > li::marker {
+    @apply font-semibold
+}
 </style>

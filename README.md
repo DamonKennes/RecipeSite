@@ -8,11 +8,8 @@
 </p>
 
 ## TODO:
-- Ingredients op detail page bug (Lara?)
-- Overkoepelende component voor weergeven array of cards (Damon?)
 - Welke rating tonen op recommended cards? -> eigen rating ook (PIETER)
 - Hoe weergeven search results? -> based on current
-- Recommender Aanroepen -> via laravel queues (bij elke rating change)
 - Script om alle historische ratings data (eenmalig) in tabel te schrijven? -> via laravel seeder?
 - Runnen op server (!! python packages)
 - Klaarmaken voor study (A vs B interface)

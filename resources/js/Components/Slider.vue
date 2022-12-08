@@ -1,7 +1,7 @@
 <template>
-    <div id="app">
-        <h1 class="text-lg text-grey">{{text}}</h1>
-        <vue-horizontal>
+    <div>
+        <h1 class="text-xl text-grey m-4 font-bold">{{text}}</h1>
+        <vue-horizontal class="mx-6">
             <Card v-for="recipe in data"
             :name="recipe.name"
                                         :score="recipe.pivot.rating"
@@ -12,8 +12,8 @@
         </vue-horizontal>
     </div>
 </template>
-  
-  
+
+
   <script>
   import VueHorizontal from "vue-horizontal";
   import {Inertia} from "@inertiajs/inertia";

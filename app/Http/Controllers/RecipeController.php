@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\UpdateRecommendations;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,11 +16,18 @@ class RecipeController extends Controller
      */
     public function index(Request $request)
     {
-        return Inertia::render('Recipes/Index', [
-            "results" => Recipe::search($request['query'])->paginate(15),
-            "recommendations" => $request->user()->recommended()->paginate(15),
-            "favourites" => $request->user()->recipes()->orderBy('pivot_rating', 'desc')->paginate(15),
-        ]);
+        if ($request->user()->explanations)
+            return Inertia::render('Recipes/IndexExpl', [
+                "results" => Recipe::search($request['query'])->paginate(15),
+                "recommendations" => $request->user()->recommended()->paginate(15),
+                "favourites" => $request->user()->recipes()->orderBy('pivot_rating', 'desc')->paginate(15),
+            ]);
+        else
+            return Inertia::render('Recipes/Index', [
+                "results" => Recipe::search($request['query'])->paginate(15),
+                "recommendations" => $request->user()->recommended()->paginate(15),
+                "favourites" => $request->user()->recipes()->orderBy('pivot_rating', 'desc')->paginate(15),
+            ]);
     }
 
     /**
@@ -55,6 +63,7 @@ class RecipeController extends Controller
         if ($recommended){
             $request->user()->recommended()->detach($recipe);
         }
+        UpdateRecommendations::dispatch();
         return redirect()->back();
     }
 

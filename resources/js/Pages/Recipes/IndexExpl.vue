@@ -125,13 +125,14 @@
                                 <Slider :data ="favourites.data" text = "Your Favourites">
                                 </Slider>
                                 <h1 class="text-xl text-grey m-4 font-bold">Recommended for you</h1>
-                                <card v-for="recipe in recommendations.data"
+                                <card-with-info v-for="recipe in recommendations.data"
                                       :name="recipe.name"
-                                      :image="recipe.image_url"
+                                      :image-recipe="recipe.image_url"
+                                      :image-graf="'/storage/' + recipe.pivot.image_url"
                                       :score="0"
                                                 :id="recipe.id"
                                       @open-recipe="openRecipe(recipe)"
-                                ></card>
+                                ></card-with-info>
                                 </div>
                             <div v-else>
                                 <h1 class="text-lg text-grey">Search results</h1>
@@ -164,7 +165,7 @@ import Slider from "@/Components/Slider.vue";
 
 import CardWithInfo from "@/Components/CardWithInfo.vue";
 export default {
-    name: "Index",
+    name: "IndexExpl",
     components: {CardWithInfo, Card, Head, Link, ResponsiveNavLink, ApplicationLogo, DropdownLink, Dropdown, SearchBar, VueHorizontal, Slider},
     props: {
         results: {
