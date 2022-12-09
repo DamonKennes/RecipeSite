@@ -134,9 +134,9 @@
                                 ></card>
                                 </div>
                             <div v-else>
-                                <h1 class="text-lg text-grey">Search results</h1>
-                                <div v-for="recipe in results.data" class="flex h-20" @click="openRecipe(recipe)">
-                                        <img :src="recipe.image_url" alt="Recipe picture" class="w-20"/>
+                                <h1 class="text-xl text-grey m-4 font-bold">Search results</h1>
+                                <div v-for="recipe in results.data" class="flex h-20 border-b-2 border-grey" @click="openRecipe(recipe)">
+                                        <img :src="recipe.image_url" alt="Recipe picture" class="w-20 cover-object"/>
                                     <h1>{{recipe.name}}</h1>
 
                                 </div>

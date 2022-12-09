@@ -20,13 +20,13 @@ class RecipeController extends Controller
             return Inertia::render('Recipes/IndexExpl', [
                 "results" => Recipe::search($request['query'])->paginate(15),
                 "recommendations" => $request->user()->recommended()->paginate(15),
-                "favourites" => $request->user()->recipes()->orderBy('pivot_rating', 'desc')->paginate(15),
+                "favourites" => $request->user()->recipes()->wherePivot('rating', '>', '2')->orderBy('pivot_rating', 'desc')->paginate(15),
             ]);
         else
             return Inertia::render('Recipes/Index', [
                 "results" => Recipe::search($request['query'])->paginate(15),
                 "recommendations" => $request->user()->recommended()->paginate(15),
-                "favourites" => $request->user()->recipes()->orderBy('pivot_rating', 'desc')->paginate(15),
+                "favourites" => $request->user()->recipes()->wherePivot('rating', '>', '2')->orderBy('pivot_rating', 'desc')->paginate(15),
             ]);
     }
 

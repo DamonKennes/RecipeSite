@@ -5,6 +5,7 @@
       :name = name
       :score = score
       :id = id
+      @open-recipe="onClick"
       />
       <GrafiekCard
       :image = imageGraf
