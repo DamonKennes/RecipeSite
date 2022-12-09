@@ -34,4 +34,6 @@ Route::middleware('auth')->group(function () {
 Route::resource('/recipes', \App\Http\Controllers\RecipeController::class)
     ->only(['show', 'index', 'update'])->middleware(['auth', 'verified']);
 
+Route::redirect('/dashboard','/recipes/')->name('dashboard');
+
 require __DIR__.'/auth.php';

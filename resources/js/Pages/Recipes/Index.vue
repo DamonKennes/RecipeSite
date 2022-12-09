@@ -3,7 +3,7 @@
 
     <div>
         <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+            <nav class="bg-white border-b border-gray-100 fixed z-50 w-full" :class="{ 'scrolled': !atTopOfPage }" >
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -17,7 +17,7 @@
                                 </Link>
                             </div>
                         </div>
-                        <div class="align-self-stretch">
+                        <div class="my-auto w-full mx-6">
                             <SearchBar :value="search" @updated-value="updateSearch"></SearchBar>
                         </div>
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -118,7 +118,7 @@
 
             <!-- Page Content -->
             <main>
-                <div class="py-12">
+                <div class="pt-16 pb-12">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div v-if="!search">
@@ -184,6 +184,7 @@ export default {
         return {
             showingNavigationDropdown: false,
             search: "",
+            atTopOfPage: true,
         }
     },
     methods: {
@@ -192,7 +193,17 @@ export default {
         },
         openRecipe(recipe){
             Inertia.get('/recipes/' + recipe.id);
+        },
+        handleScroll(){
+            if(window.pageYOffset>0){
+                if(this.atTopOfPage) this.atTopOfPage = false
+            }else{
+                if(!this.atTopOfPage) this.atTopOfPage = true
+            }
         }
+    },
+    beforeMount() {
+        window.addEventListener('scroll', this.handleScroll);
     },
     watch: {
         search(value){
@@ -209,5 +220,8 @@ export default {
 </script>
 
 <style scoped>
-
+nav.scrolled {
+    @apply shadow-2xl;
+    border-bottom: 0;
+}
 </style>
