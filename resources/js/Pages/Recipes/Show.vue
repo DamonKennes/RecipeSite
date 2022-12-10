@@ -1,6 +1,6 @@
 <template>
     <div class="flex md:justify-center mb-4">
-        <a @click="back" class="fixed left-0 top-0 m-3 md:px-1 hover:shadow-inner hover:shadow-gray-400 text-xl md:text-3xl font-bold">&larr;</a>
+        <a @click="back" class="fixed left-0 top-0 m-3 md:px-1 bg-gray-100 px-2 rounded-full border border-[#fa0000] hover:shadow-inner hover:shadow-gray-400 text-xl md:text-3xl font-bold text-[#fa0000]">&larr;</a>
         <img :src="recipe.image_url" :alt="recipe.name" class="rounded-b-lg w-full md:w-auto">
     </div>
     <h1 class="text-4xl text-center">{{recipe.name}}</h1>
@@ -50,7 +50,14 @@ export default {
         directions() {
             // same as with ingredients
             // return this.recipe.directions.substring(17, this.recipe.directions.length-2).split("\n")
-            return this.recipe.directions.substring(17, this.recipe.directions.length-2).split("\\n").slice(6)
+            var res = this.recipe.directions.substring(17, this.recipe.directions.length-2).split("\\n")
+            console.log(res)
+            if (res[0] == "Prep") {
+                return res.slice(6)
+            } else {
+                return res
+            }
+            // return this.recipe.directions.substring(17, this.recipe.directions.length-2).split("\\n").slice(6)
         }
     },
 }
