@@ -5,7 +5,8 @@ from surprise.model_selection import cross_validate
 import difflib
 import random
 import plotly.express as px
-from sklearn.manifold import TSNE
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 
 # Import data from database with info of database below
 host = '127.0.0.1'
@@ -111,6 +112,18 @@ def plot_recipes(ids, user_id, filename):
     fig = px.scatter(recipe_vector_df, x='x', y='y', text='name')
 
     fig.for_each_trace(lambda t: t.update(textfont_color=text_colors, textposition='top center'))
+    # These lines add a legend to the plot (can be deleted)
+    fig.add_annotation(
+        text="Green = Score of +4 <br> Red = Score of -4 <br> Black = Recommended",
+        align="left",
+        showarrow=False,
+        xref="paper",
+        yref="paper",
+        font=dict(color="black", size=10),
+        y=1,
+        x=1,
+        xanchor="right",
+    )
     # fig.show()
 
     fig.write_image(filename)
@@ -127,9 +140,12 @@ cross_validate(svd, data, measures=['RMSE', 'MAE'], cv=3, verbose=True)
 trainset = data.build_full_trainset()
 svd.fit(trainset)
 
-tsne = TSNE(n_components=2, n_iter=350, verbose=3, random_state=1)
+# Standardize data (mu = 0, sigma = 1)
+svd_scaled = StandardScaler().fit_transform(svd.qi)
+# Use PCA (that holds the distances after dimensinality being reduced)
+pca = PCA(n_components=2)
+recipes_embedding = pca.fit_transform(svd_scaled)
 
-recipes_embedding = tsne.fit_transform(svd.qi)
 projection = pd.DataFrame(columns=['x', 'y'], data=recipes_embedding)
 projection['name'] = metadata['name']
 
