@@ -10,4 +10,4 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 #RUN php artisan optimize
 
 # Ensure all of our files are owned by the same user and group.
-RUN chown -R application:application .
+#RUN chown -R application:application .
