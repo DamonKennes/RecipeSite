@@ -1,27 +1,32 @@
 <template>
     <div class="flex">
-      <Card
-      :image = imageRecipe
-      :name = name
-      :score = score
-      :id = id
-      @open-recipe="onClick"
-      />
-      <GrafiekCard
-      :image = imageGraf
-       />
+      <div class="w-1/2">
+        <CardForRec
+        :image = imageRecipe
+        :name = name
+        :score = score
+        :id = id
+        @open-recipe="onClick"
+        />
+      </div>
+      <div class="w-1/2">
+        <GrafiekCard
+        :image = imageGraf
+        :percent = perc
+        />
+      </div>
     </div>
 </template>
 
 
   <script>
-  import Card from './Card.vue';
+  import CardForRec from './CardForRec.vue';
   import GrafiekCard from './GrafiekCard.vue';
 
   export default {
     name: 'CardWithInfo',
     components: {
-        Card,
+        CardForRec,
         GrafiekCard,
     },
     props: {
@@ -30,6 +35,7 @@
         imageGraf: String,
         imageRecipe: String,
         id: Number,
+        perc: Number
     },
     methods: {
       onClick() {

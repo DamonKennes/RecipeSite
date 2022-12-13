@@ -130,6 +130,7 @@
                                       :image-recipe="recipe.image_url"
                                       :image-graf="'/storage/' + recipe.pivot.image_url"
                                       :score="0"
+                                      :perc ="98"
                                                 :id="recipe.id"
                                       @open-recipe="openRecipe(recipe)"
                                 ></card-with-info>
