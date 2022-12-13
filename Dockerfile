@@ -5,7 +5,7 @@ ENV PHP_DISMOD=bz2,calendar,exiif,ffi,intl,gettext,ldap,mysqli,imap,pdo_pgsql,pg
 ENV CONTAINER_UID=1003
 WORKDIR /app
 
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+#RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 #RUN php artisan optimize
 
