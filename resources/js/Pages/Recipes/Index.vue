@@ -125,20 +125,21 @@
                                 <Slider :data ="favourites.data" text = "Your Favourites">
                                 </Slider>
                                 <h1 class="text-xl text-grey m-4 font-bold">Recommended for you</h1>
+                                <div class="mx-6 grid grid-cols-2 gap-4">
                                 <card v-for="recipe in recommendations.data"
                                       :name="recipe.name"
-                                      :image-recipe="recipe.image_url"
+                                      :image="recipe.image_url"
                                       :score="0"
                                                 :id="recipe.id"
                                       @open-recipe="openRecipe(recipe)"
                                 ></card>
                                 </div>
+                            </div>
                             <div v-else>
                                 <h1 class="text-xl text-grey m-4 font-bold">Search results</h1>
                                 <div v-for="recipe in results.data" class="flex h-20 border-b-2 border-grey" @click="openRecipe(recipe)">
                                         <img :src="recipe.image_url" alt="Recipe picture" class="w-20 object-cover"/>
-                                    <h1 class="my-auto ml-4 font-semibold">{{recipe.name}}</h1>
-
+                                    <h1 class="my-auto ml-4 font-semibold">{{recipe.name}}</h1>  
                                 </div>
                             </div>
                         </div>

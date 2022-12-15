@@ -1,6 +1,6 @@
 <template>
-    <div  class="p-4">  
-      <div v-on:click="showModal = true" class="w-full rounded overflow-hidden shadow-lg h-full">
+    <div  class="p-4 h-full">  
+      <div v-on:click="showModal = true" class="w-40 rounded overflow-hidden shadow-lg h-full">
         <img class="w-full" v-bind:src= image alt="Recommendation">
         <div class="px-6 py-4">
           <div class="font-bold text-xl">Confidence:</div>

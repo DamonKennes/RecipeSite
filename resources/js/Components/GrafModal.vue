@@ -1,6 +1,6 @@
 <template>
-    <div class="modal-overlay" @click="$emit('close-modal')">
-        <img class="modal object-contain center" v-bind:src= imageModal alt="" /> 
+    <div class="modal-overlay z-40" @click="$emit('close-modal')">
+        <img class="modal object-contain center z-50 py-4" v-bind:src= imageModal alt="" /> 
     </div>
   </template>
   
@@ -31,9 +31,7 @@
 
 .modal {
   text-align: center;
-  background-color: white;
-  margin-top: 300px;
-  
+  background-color: transparent;
 }
 
 </style>

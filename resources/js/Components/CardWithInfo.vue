@@ -1,6 +1,6 @@
 <template>
-    <div class="flex">
-      <div class="w-1/2">
+    <div class="mx-6 grid grid-cols-2 gap-4 h-full">
+      <div class="h-full">
         <CardForRec
         :image = imageRecipe
         :name = name
@@ -9,7 +9,7 @@
         @open-recipe="onClick"
         />
       </div>
-      <div class="w-1/2">
+      <div class="h-full">
         <GrafiekCard
         :image = imageGraf
         :percent = perc
