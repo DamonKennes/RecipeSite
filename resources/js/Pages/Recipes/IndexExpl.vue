@@ -125,15 +125,17 @@
                                 <Slider :data ="favourites.data" text = "Your Favourites">
                                 </Slider>
                                 <h1 class="text-xl text-grey m-4 font-bold">Recommended for you</h1>
+                                <div class="grid md:grid-cols-3 gap-1">  
                                 <card-with-info v-for="recipe in recommendations.data"
                                       :name="recipe.name"
                                       :image-recipe="recipe.image_url"
                                       :image-graf="'/storage/' + recipe.pivot.image_url"
                                       :score="0"
-                                      :perc ="98"
+                                      :perc ="recipe.pivot.certainty"
                                                 :id="recipe.id"
                                       @open-recipe="openRecipe(recipe)"
                                 ></card-with-info>
+                            </div>
                                 </div>
                             <div v-else>
                                 <h1 class="text-xl text-grey m-4 font-bold">Search results</h1>

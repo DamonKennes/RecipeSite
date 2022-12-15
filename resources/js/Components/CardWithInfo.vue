@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-6 grid grid-cols-2 gap-4 h-full">
+    <div class="mx-6 grid grid-cols-2 gap-1 h-full">
       <div class="h-full">
         <CardForRec
         :image = imageRecipe
