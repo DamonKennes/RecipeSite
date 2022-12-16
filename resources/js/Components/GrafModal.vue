@@ -1,9 +1,9 @@
 <template>
-    <div class="modal-overlay z-40" @click="$emit('close-modal')">
-        <img class="modal object-contain center z-50 py-4" v-bind:src= imageModal alt="" /> 
+    <div class="modal-overlay z-40 cursor-zoom-out" @click="$emit('close-modal')">
+        <img class="modal object-contain center z-50 py-4" v-bind:src= imageModal alt="" />
     </div>
   </template>
-  
+
   <script>
     export default {
         name: 'GrafModal',
