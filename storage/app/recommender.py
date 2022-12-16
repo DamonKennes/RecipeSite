@@ -8,6 +8,8 @@ import plotly.express as px
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
+import time
+
 # Import data from database with info of database below
 host = '127.0.0.1'
 port = int(3306)
@@ -28,7 +30,7 @@ def read_dbs():
 
 def get_recipe_id(recipe_name, metadata):
     """
-    Gets the book ID for a book title based on the closest match in the metadata dataframe.
+    Gets the recipe ID for a recipe name based on the closest match in the metadata dataframe.
     """
 
     existing_names = list(metadata['name'].values)
@@ -39,7 +41,7 @@ def get_recipe_id(recipe_name, metadata):
 
 def get_recipe_info(recipe_id, metadata):
     """
-    Returns some basic information about a book given the book id and the metadata dataframe.
+    Returns some basic information about a recipe given the recipe id and the metadata dataframe.
     """
 
     recipe_info = metadata[metadata['id'] == recipe_id][['id', 'image_url', 'ingredients', 'name', 'directions']]
@@ -48,7 +50,7 @@ def get_recipe_info(recipe_id, metadata):
 
 def predict_review(user_id, recipe_name, model, metadata):
     """
-    Predicts the review (on a scale of 1-5) that a user would assign to a specific book.
+    Predicts the review (on a scale of 1-5) that a user would assign to a specific recipe.
     """
 
     recipe_id = get_recipe_id(recipe_name, metadata)
@@ -56,20 +58,31 @@ def predict_review(user_id, recipe_name, model, metadata):
     return review_prediction.est
 
 
-def generate_recommendation(user_id, model, metadata, thresh=4.5):
+def generate_recommendation(user_id, model, metadata, thresh):
     """
-    Generates a book recommendation for a user based on a rating threshold. Only
-    books with a predicted rating at or above the threshold will be recommended
+    Generates a recipe recommendation for a user based on a rating threshold. Only
+    recipe with a predicted rating at or above the threshold will be recommended
     """
 
     recipe_names = list(metadata['name'].values)
     random.shuffle(recipe_names)
+
+    seconds_till_timeout = 3.3
+    timeout = time.time() + seconds_till_timeout
 
     for recipe_name in recipe_names:
         rating = predict_review(user_id, recipe_name, model, metadata)
         if rating >= thresh:
             recipe_id = get_recipe_id(recipe_name, metadata)
             return rating, recipe_id
+        if time.time() > timeout:
+            return 0, 0
+
+
+def get_random_recipe(metadata):
+    recipe_names = list(metadata['id'].values)
+    random.shuffle(recipe_names)
+    return recipe_names[0]
 
 
 def get_recipe_index(recipe_id, metadata):
@@ -134,6 +147,8 @@ metadata, ratings_data, users = read_dbs()
 reader = Reader(rating_scale=(1, 5))
 data = Dataset.load_from_df(ratings_data[['user_id', 'recipe_id', 'rating']], reader)
 
+start = time.time()
+
 svd = SVD(verbose=True, n_epochs=10)
 cross_validate(svd, data, measures=['RMSE', 'MAE'], cv=3, verbose=True)
 
@@ -142,20 +157,31 @@ svd.fit(trainset)
 
 # Standardize data (mu = 0, sigma = 1)
 svd_scaled = StandardScaler().fit_transform(svd.qi)
-# Use PCA (that holds the distances after dimensinality being reduced)
+# Use PCA (that holds the distances after dimensionality being reduced)
 pca = PCA(n_components=2)
 recipes_embedding = pca.fit_transform(svd_scaled)
 
 projection = pd.DataFrame(columns=['x', 'y'], data=recipes_embedding)
 projection['name'] = metadata['name']
 
+end = time.time()
+print("totale tijd:", end-start)
+
 to_write = []
 for user_id in users["id"]:
     for _ in range(5):
-        est_rating, recipe_id = generate_recommendation(user_id, svd, metadata)
+        est_rating, recipe_id = generate_recommendation(user_id, svd, metadata, 5)
+
+        certain = (est_rating / 5) * 100
+
+        if certain == 0:
+            recipe_id = get_random_recipe(metadata)
+
         filename = "U" + str(user_id) + "R" + str(recipe_id) + ".png"
         plot_recommendation(user_id, recipe_id, filename)
-        to_write.append((user_id, recipe_id, filename, (est_rating / 5) * 100))
+        # Certainty op 0 als "random recommend"
+        to_write.append((user_id, recipe_id, filename, certain))
+
 
 cur = conn.cursor()
 cur.execute("TRUNCATE TABLE recommendations")
@@ -165,3 +191,5 @@ for item in to_write:
     cur.execute(sql, (item[0], item[1], 'public/' + item[2], item[3]))
 conn.commit()
 print("DONE")
+
+
