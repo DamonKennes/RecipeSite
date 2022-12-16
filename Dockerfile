@@ -6,10 +6,13 @@ ENV CONTAINER_UID=1003
 
 # Install python/pip
 ENV PYTHONUNBUFFERED=1
-RUN apt-get update && apt-get install -yy python3.10 python3-pip
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get update && apt-get install -yy python3.8
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
 #RUN python -m ensurepip
 #RUN pip install --no-cache --upgrade pip setuptools
-RUN pip3 install --no-cache pandas pymysql surprise plotly cryptography
+RUN python -m pip install --no-cache pandas pymysql surprise plotly cryptography
 
 WORKDIR /app
 
