@@ -146,7 +146,7 @@ while (1):
     cur.execute(sqlQuery)
     rows = cur.fetchall()
     if (len(rows)):
-        cursorObject.execute("truncate table jobs")
+        cur.execute("truncate table jobs")
         conn.commit()
         metadata, ratings_data, users = read_dbs()
 
