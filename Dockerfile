@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update && apt-get install -yy python3-pip
 #RUN python -m ensurepip
 #RUN pip install --no-cache --upgrade pip setuptools
-RUN pip install --no-cache pandas pymysql surprise plotly cryptography
+RUN pip3 install --no-cache pandas pymysql surprise plotly cryptography
 
 WORKDIR /app
 
