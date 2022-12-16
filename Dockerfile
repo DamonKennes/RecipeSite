@@ -6,7 +6,7 @@ ENV CONTAINER_UID=1003
 
 # Install python/pip
 ENV PYTHONUNBUFFERED=1
-RUN apt install -yy python-pip
+RUN apt-get install -yy python-pip
 #RUN python -m ensurepip
 #RUN pip install --no-cache --upgrade pip setuptools
 RUN pip install --no-cache pandas pymysql surprise plotly cryptography
