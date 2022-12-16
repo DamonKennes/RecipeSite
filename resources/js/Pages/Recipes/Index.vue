@@ -125,6 +125,7 @@
                                 <Slider :data ="favourites.data" text = "Your Favourites">
                                 </Slider>
                                 <h1 class="text-xl text-grey m-4 font-bold">Recommended for you</h1>
+                                <div class="mx-6 grid grid-cols-2 md:grid-cols-6 gap-4">
                                 <card v-for="recipe in recommendations.data"
                                       :name="recipe.name"
                                       :image="recipe.image_url"
@@ -133,12 +134,12 @@
                                       @open-recipe="openRecipe(recipe)"
                                 ></card>
                                 </div>
+                            </div>
                             <div v-else>
                                 <h1 class="text-xl text-grey m-4 font-bold">Search results</h1>
-                                <div v-for="recipe in results.data" class="flex h-20 border-b-2 border-grey" @click="openRecipe(recipe)">
-                                        <img :src="recipe.image_url" alt="Recipe picture" class="w-20 cover-object"/>
-                                    <h1>{{recipe.name}}</h1>
-
+                                <div v-for="recipe in allResults" class="flex h-20 border-b-2 border-grey cursor-pointer" @click="openRecipe(recipe)">
+                                        <img :src="recipe.image_url" alt="Recipe picture" class="w-20 object-cover"/>
+                                    <h1 class="my-auto ml-4 font-semibold">{{recipe.name}}</h1>
                                 </div>
                             </div>
                         </div>
@@ -185,6 +186,7 @@ export default {
             showingNavigationDropdown: false,
             search: "",
             atTopOfPage: true,
+            allResults : [],
         }
     },
     methods: {
@@ -195,15 +197,32 @@ export default {
             Inertia.get('/recipes/' + recipe.id);
         },
         handleScroll(){
-            if(window.pageYOffset>0){
-                if(this.atTopOfPage) this.atTopOfPage = false
-            }else{
-                if(!this.atTopOfPage) this.atTopOfPage = true
+            this.atTopOfPage = window.scrollY <= 0;
+            if (this.search && (window.innerHeight + window.scrollY + 200) > document.body.scrollHeight)
+                this.loadMore();
+        },
+        loadMore() {
+            if (this.results.next_page_url === null) {
+                return
             }
+
+            this.$inertia.get(this.results.next_page_url, {}, {
+                preserveState: true,
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.allResults = [...this.allResults, ...this.results.data]
+                }
+            })
         }
     },
     beforeMount() {
         window.addEventListener('scroll', this.handleScroll);
+        let uri = window.location.search.substring(1);
+        let q = new URLSearchParams(uri).get('query');
+        if (q) this.search = q;
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     watch: {
         search(value){
@@ -212,6 +231,8 @@ export default {
                 { query: value },
                 {
                     preserveState: true,
+                    preserveScroll: true,
+                    onSuccess: () => {this.allResults = this.results.data}
                 }
             );
         }
