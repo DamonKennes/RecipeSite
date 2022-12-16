@@ -13,6 +13,11 @@ services:
         depends_on:
             - mysql
             - meilisearch
+            - recommender
+    recommender:
+      build: storage/app/
+      networks:
+        - recipynet
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
