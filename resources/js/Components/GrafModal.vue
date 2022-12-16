@@ -1,6 +1,12 @@
 <template>
     <div class="modal-overlay z-40 cursor-zoom-out" @click="$emit('close-modal')">
-        <img class="modal object-contain center z-50 py-4" v-bind:src= imageModal alt="" />
+      <div class="modal z-50  py-4">      
+        <img class=" modal object-contain center py-4" v-bind:src= imageModal alt="" />
+        <h1 class="text-white">This plot shows all of the recipes you have rated. The ones you have rated four 
+        or more are in green and the others are in red. Your recommendation is in black. Recipes 
+        that are rated similarly by similar users are closer to each other on the plot.</h1>
+      </div>
+      
     </div>
   </template>
 
