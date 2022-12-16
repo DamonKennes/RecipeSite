@@ -11,11 +11,11 @@ from sklearn.preprocessing import StandardScaler
 import time
 
 # Import data from database with info of database below
-host = '127.0.0.1'
+host = 'mysql'
 port = int(3306)
-passw = 'password'
-user = 'sail'
-db = 'recipe_app_web'
+passw = 'recipyuserpw'
+user = 'recipyuser'
+db = 'recipy'
 # Make connection to database
 conn = pymysql.connect(host=host, port=port, user=user, passwd=passw, db=db)
 
