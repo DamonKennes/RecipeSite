@@ -6,7 +6,7 @@ ENV CONTAINER_UID=1003
 
 # Install python/pip
 ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python3 py3-pandas
+RUN apk add --update --no-cache python3 py3-pandas py3-scipy
 RUN python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools
 RUN pip3 install --no-cache pymysql surprise plotly sklearn
