@@ -170,7 +170,7 @@ print("totale tijd:", end-start)
 to_write = []
 for user_id in users["id"]:
     for _ in range(5):
-        est_rating, recipe_id = generate_recommendation(user_id, svd, metadata, 5)
+        est_rating, recipe_id = generate_recommendation(user_id, svd, metadata, 4.5)
 
         certain = (est_rating / 5) * 100
 
