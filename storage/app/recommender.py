@@ -177,8 +177,8 @@ for user_id in users["id"]:
         if certain == 0:
             recipe_id = get_random_recipe(metadata)
 
-        filename = "/var/www/html/storage/app/public/U" + str(user_id) + "R" + str(recipe_id) + ".png"
-        plot_recommendation(user_id, recipe_id, filename)
+        filename = "U" + str(user_id) + "R" + str(recipe_id) + ".png"
+        plot_recommendation(user_id, recipe_id, "/var/www/html/storage/app/public/" + filename)
         # Certainty op 0 als "random recommend"
         to_write.append((user_id, recipe_id, filename, certain))
 
@@ -188,7 +188,7 @@ cur.execute("TRUNCATE TABLE recommendations")
 for item in to_write:
     sql = """insert into recommendations (user_id, recipe_id, image_url, certainty)
             values (%s, %s, %s, %s)"""
-    cur.execute(sql, (item[0], item[1], 'public/' + item[2], item[3]))
+    cur.execute(sql, (item[0], item[1], 'storage/' + item[2], item[3]))
 conn.commit()
 print("DONE")
 
