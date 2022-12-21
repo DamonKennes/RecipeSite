@@ -129,7 +129,7 @@
                                 <card-with-info v-for="recipe in recommendations.data"
                                       :name="recipe.name"
                                       :image-recipe="recipe.image_url"
-                                      :image-graf="'/storage/' + recipe.pivot.image_url"
+                                      :image-graf="recipe.pivot.image_url"
                                       :score="0"
                                       :perc ="recipe.pivot.certainty"
                                                 :id="recipe.id"
