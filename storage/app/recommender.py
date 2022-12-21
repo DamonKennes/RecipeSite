@@ -19,6 +19,7 @@ db = 'recipy'
 # Make connection to database
 conn = pymysql.connect(host=host, port=port, user=user, passwd=passw, db=db)
 
+
 # Read sql entries through query
 def read_dbs():
     metadata = pd.read_sql("SELECT * FROM recipes", conn)
@@ -140,60 +141,55 @@ def plot_recipes(ids, user_id, filename):
 
     fig.write_image(filename)
 
-while (1):
-    cur = conn.cursor()
-    sqlQuery = "select * from jobs"
-    cur.execute(sqlQuery)
-    rows = cur.fetchall()
-    if (len(rows)):
-        cur.execute("truncate table jobs")
-        conn.commit()
-        metadata, ratings_data, users = read_dbs()
 
-        reader = Reader(rating_scale=(1, 5))
-        data = Dataset.load_from_df(ratings_data[['user_id', 'recipe_id', 'rating']], reader)
+metadata, ratings_data, users = read_dbs()
 
-        start = time.time()
+reader = Reader(rating_scale=(1, 5))
+data = Dataset.load_from_df(ratings_data[['user_id', 'recipe_id', 'rating']], reader)
 
-        svd = SVD(verbose=True, n_epochs=10)
-        cross_validate(svd, data, measures=['RMSE', 'MAE'], cv=3, verbose=True)
+start = time.time()
 
-        trainset = data.build_full_trainset()
-        svd.fit(trainset)
+svd = SVD(verbose=True, n_epochs=10)
+cross_validate(svd, data, measures=['RMSE', 'MAE'], cv=3, verbose=True)
 
-        # Standardize data (mu = 0, sigma = 1)
-        svd_scaled = StandardScaler().fit_transform(svd.qi)
-        # Use PCA (that holds the distances after dimensionality being reduced)
-        pca = PCA(n_components=2)
-        recipes_embedding = pca.fit_transform(svd_scaled)
+trainset = data.build_full_trainset()
+svd.fit(trainset)
 
-        projection = pd.DataFrame(columns=['x', 'y'], data=recipes_embedding)
-        projection['name'] = metadata['name']
+# Standardize data (mu = 0, sigma = 1)
+svd_scaled = StandardScaler().fit_transform(svd.qi)
+# Use PCA (that holds the distances after dimensionality being reduced)
+pca = PCA(n_components=2)
+recipes_embedding = pca.fit_transform(svd_scaled)
 
-        end = time.time()
-        print("totale tijd:", end-start)
+projection = pd.DataFrame(columns=['x', 'y'], data=recipes_embedding)
+projection['name'] = metadata['name']
 
-        to_write = []
-        for user_id in users["id"]:
-            for _ in range(5):
-                est_rating, recipe_id = generate_recommendation(user_id, svd, metadata, 5)
+end = time.time()
+print("totale tijd:", end-start)
 
-                certain = (est_rating / 5) * 100
+to_write = []
+for user_id in users["id"]:
+    for _ in range(5):
+        est_rating, recipe_id = generate_recommendation(user_id, svd, metadata, 5)
 
-                if certain == 0:
-                    recipe_id = get_random_recipe(metadata)
+        certain = (est_rating / 5) * 100
 
-                filename = "U" + str(user_id) + "R" + str(recipe_id) + ".png"
-                plot_recommendation(user_id, recipe_id, filename)
-                # Certainty op 0 als "random recommend"
-                to_write.append((user_id, recipe_id, filename, certain))
+        if certain == 0:
+            recipe_id = get_random_recipe(metadata)
 
-        cur.execute("TRUNCATE TABLE recommendations")
-        for item in to_write:
-            sql = """insert into recommendations (user_id, recipe_id, image_url, certainty)
-                    values (%s, %s, %s, %s)"""
-            cur.execute(sql, (item[0], item[1], 'public/' + item[2], item[3]))
-        conn.commit()
-        print("DONE")
+        filename = "U" + str(user_id) + "R" + str(recipe_id) + ".png"
+        plot_recommendation(user_id, recipe_id, filename)
+        # Certainty op 0 als "random recommend"
+        to_write.append((user_id, recipe_id, filename, certain))
+
+
+cur = conn.cursor()
+cur.execute("TRUNCATE TABLE recommendations")
+for item in to_write:
+    sql = """insert into recommendations (user_id, recipe_id, image_url, certainty)
+            values (%s, %s, %s, %s)"""
+    cur.execute(sql, (item[0], item[1], 'public/' + item[2], item[3]))
+conn.commit()
+print("DONE")
 
 
