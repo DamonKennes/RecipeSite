@@ -35,7 +35,7 @@ class UpdateRecommendations implements ShouldQueue
      */
     public function handle()
     {
-        $process = new Process(['python', storage_path('app/recommender.py')]);
+        $process = new Process(['python3', storage_path('app/recommender.py')]);
         $process->setTimeout(3600);
         $process->run();
 

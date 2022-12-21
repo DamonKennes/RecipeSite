@@ -177,7 +177,7 @@ for user_id in users["id"]:
         if certain == 0:
             recipe_id = get_random_recipe(metadata)
 
-        filename = "U" + str(user_id) + "R" + str(recipe_id) + ".png"
+        filename = "/var/www/html/storage/app/public/U" + str(user_id) + "R" + str(recipe_id) + ".png"
         plot_recommendation(user_id, recipe_id, filename)
         # Certainty op 0 als "random recommend"
         to_write.append((user_id, recipe_id, filename, certain))
