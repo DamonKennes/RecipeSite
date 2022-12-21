@@ -48,7 +48,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get update && apt-get install python3-pip
+RUN apt-get update && apt-get -y install python3-pip
 RUN pip install pandas pymysql surprise plotly scikit-learn kaleido
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.1
