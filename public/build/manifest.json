@@ -279,6 +279,10 @@
     "file": "assets/Index.e22a87c6.css",
     "src": "resources/js/Pages/Recipes/Index.css"
   },
+  "resources/js/Pages/Recipes/IndexExpl.css": {
+    "file": "assets/IndexExpl.6a03fd76.css",
+    "src": "resources/js/Pages/Recipes/IndexExpl.css"
+  },
   "CardWithInfo.css": {
     "file": "assets/CardWithInfo.137716ab.css",
     "src": "CardWithInfo.css"
@@ -286,10 +290,6 @@
   "resources/js/Pages/Recipes/Show.css": {
     "file": "assets/Show.a054228b.css",
     "src": "resources/js/Pages/Recipes/Show.css"
-  },
-  "resources/js/Pages/Recipes/IndexExpl.css": {
-    "file": "assets/IndexExpl.6a03fd76.css",
-    "src": "resources/js/Pages/Recipes/IndexExpl.css"
   },
   "resources/js/app.css": {
     "file": "assets/app.14e0ba2f.css",
