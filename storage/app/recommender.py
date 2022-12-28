@@ -76,7 +76,11 @@ def generate_recommendation(user_id, model, metadata, thresh):
             recipe_id = get_recipe_id(recipe_name, metadata)
             return rating, recipe_id
         if time.time() > timeout:
-            return 0, 0
+            #return 0, 0
+            timeout+=1
+            thresh -=0.5
+        if thresh <= 0:
+            return 0,0
 
 
 def get_random_recipe(metadata):
@@ -170,7 +174,7 @@ print("totale tijd:", end-start)
 to_write = []
 for user_id in users["id"]:
     for _ in range(5):
-        est_rating, recipe_id = generate_recommendation(user_id, svd, metadata, 5)
+        est_rating, recipe_id = generate_recommendation(user_id, svd, metadata, 4.5)
 
         certain = (est_rating / 5) * 100
 
