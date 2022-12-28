@@ -50,15 +50,12 @@ export default {
 
         directions() {
             // same as with ingredients
-            // return this.recipe.directions.substring(17, this.recipe.directions.length-2).split("\n")
             var res = this.recipe.directions.substring(17, this.recipe.directions.length-2).split("\\n")
             console.log(res)
-            if (res[0] == "Prep") {
-                return res.slice(6)
-            } else {
-                return res
+            while (res[0] == "Prep" || res[0] == "Cook" || res[0] == "Ready In") {
+                res = res.slice(2);
             }
-            // return this.recipe.directions.substring(17, this.recipe.directions.length-2).split("\\n").slice(6)
+            return res;
         }
     },
 }
