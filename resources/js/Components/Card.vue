@@ -3,7 +3,7 @@
     <div v-on:click="onClick()" class="w-40 rounded overflow-hidden shadow-lg h-full cursor-pointer flex flex-col justify-between">
         <div>
       <img class="w-full" v-bind:src = image alt="Image">
-        <div class="font-bold text-xl px-6 pt-4">{{name}}</div>
+        <div class="font-bold text-md px-6 pt-4">{{name}}</div>
         </div>
         <Stars class="mt-auto px-6 pb-4" :initial-rating="score" @change-rating="updateRating"></Stars>
     </div>
