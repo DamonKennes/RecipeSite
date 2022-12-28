@@ -1,14 +1,14 @@
 <template>
     <div class="p-4">
     <div class="flex flex-row justify-between w-full rounded overflow-hidden shadow-lg h-full">
-        <div v-on:click="onClick()" class="cursor-pointer flex flex-col justify-between mb-4">
+        <div v-on:click="onClick()" class="cursor-pointer flex flex-col justify-between mb-4 w-1/2">
         <div>
         <img class="w-full" :src = image alt="Image">
           <div class="font-bold text-md px-6 pt-4">{{name}}</div>
     </div>
     </div>
         <hr/>
-        <div @click="showModal = true" class="cursor-zoom-in">
+        <div @click="showModal = true" class="cursor-zoom-in w-1/2">
             <img class="w-full" :src= imageModal alt="Recommendation">
             <div class="font-semibold text-md text-center mb-4">{{percent}}% confidence</div>
         </div>
