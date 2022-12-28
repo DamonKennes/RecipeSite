@@ -279,17 +279,17 @@
     "file": "assets/IndexExpl.8767b72e.css",
     "src": "resources/js/Pages/Recipes/IndexExpl.css"
   },
-  "resources/js/Pages/Recipes/Show.css": {
-    "file": "assets/Show.53c09370.css",
-    "src": "resources/js/Pages/Recipes/Show.css"
+  "resources/js/Pages/Recipes/Index.css": {
+    "file": "assets/Index.18caa157.css",
+    "src": "resources/js/Pages/Recipes/Index.css"
   },
   "CardWithInfo.css": {
     "file": "assets/CardWithInfo.137716ab.css",
     "src": "CardWithInfo.css"
   },
-  "resources/js/Pages/Recipes/Index.css": {
-    "file": "assets/Index.18caa157.css",
-    "src": "resources/js/Pages/Recipes/Index.css"
+  "resources/js/Pages/Recipes/Show.css": {
+    "file": "assets/Show.53c09370.css",
+    "src": "resources/js/Pages/Recipes/Show.css"
   },
   "resources/js/app.css": {
     "file": "assets/app.75e5db85.css",
