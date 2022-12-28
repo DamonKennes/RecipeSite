@@ -216,6 +216,10 @@ export default {
         }
     },
     beforeMount() {
+        if (window.needsReload){
+            Inertia.reload();
+            window.needsReload = false;
+        }
         window.addEventListener('scroll', this.handleScroll);
         let uri = window.location.search.substring(1);
         let q = new URLSearchParams(uri).get('query');

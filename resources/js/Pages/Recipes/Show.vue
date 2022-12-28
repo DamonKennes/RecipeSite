@@ -34,6 +34,7 @@ export default {
     },
     methods: {
          back(){
+             window.needsReload = true;
             return window.history.back();
          },
         updateRating (val){
