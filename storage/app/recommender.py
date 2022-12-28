@@ -188,7 +188,6 @@ for user_id in users["id"]:
 
 
 cur = conn.cursor()
-cur.execute("TRUNCATE TABLE recommendations")
 for item in to_write:
     sql = """insert into recommendations (user_id, recipe_id, image_url, certainty)
             values (%s, %s, %s, %s)"""

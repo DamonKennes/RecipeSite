@@ -19,14 +19,14 @@ class RecipeController extends Controller
         if ($request->user()->explanations)
             return Inertia::render('Recipes/IndexExpl', [
                 "results" => Recipe::search($request['query'])->paginate(15),
-                "recommendations" => $request->user()->recommended()->paginate(15),
-                "favourites" => $request->user()->recipes()->wherePivot('rating', '>', '2')->orderBy('pivot_rating', 'desc')->paginate(15),
+                "recommendations" => $request->user()->recommended()->orderBy('pivot_certainty', 'desc')->paginate(100),
+                "favourites" => $request->user()->recipes()->wherePivot('rating', '>', '2')->orderBy('pivot_rating', 'desc')->paginate(100),
             ]);
         else
             return Inertia::render('Recipes/Index', [
                 "results" => Recipe::search($request['query'])->paginate(15),
-                "recommendations" => $request->user()->recommended()->paginate(15),
-                "favourites" => $request->user()->recipes()->wherePivot('rating', '>', '2')->orderBy('pivot_rating', 'desc')->paginate(15),
+                "recommendations" => $request->user()->recommended()->orderBy('pivot_certainty', 'desc')->paginate(100),
+                "favourites" => $request->user()->recipes()->wherePivot('rating', '>', '2')->orderBy('pivot_rating', 'desc')->paginate(100),
             ]);
     }
 
