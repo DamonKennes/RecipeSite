@@ -125,13 +125,14 @@
                                 <Slider :data ="favourites.data" text = "Your Favourites">
                                 </Slider>
                                 <h1 class="text-xl text-grey m-4 font-bold">Recommended for you</h1>
-                                <div class="mx-6 grid grid-cols-2 md:grid-cols-6 gap-4">
+                                <div class="mx-6 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <card v-for="recipe in recommendations.data"
                                       :name="recipe.name"
                                       :image="recipe.image_url"
                                       :score="0"
                                                 :id="recipe.id"
                                       @open-recipe="openRecipe(recipe)"
+                                      fwidth
                                 ></card>
                                 </div>
                             </div>

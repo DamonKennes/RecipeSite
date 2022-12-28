@@ -1,6 +1,6 @@
 <template>
     <div class="p-4">
-    <div v-on:click="onClick()" class="w-40 rounded overflow-hidden shadow-lg h-full cursor-pointer flex flex-col justify-between">
+    <div v-on:click="onClick()" :class="fwidth ? ['w-full'] : ['w-48']" class="rounded overflow-hidden shadow-lg h-full cursor-pointer flex flex-col justify-between">
         <div>
       <img class="w-full" v-bind:src = image alt="Image">
         <div class="font-bold text-md px-6 pt-4">{{name}}</div>
@@ -26,6 +26,10 @@ export default {
     score: Number,
     image: String,
     id: Number,
+    fwidth: {
+        type: Boolean,
+        default: false,
+    }
   },
   methods: {
     onClick() {

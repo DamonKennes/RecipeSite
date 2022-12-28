@@ -1,21 +1,13 @@
 <template>
-    <div class="mx-6 grid grid-cols-2 gap-1 h-full">
-      <div class="h-full">
         <CardForRec
         :image = imageRecipe
         :name = name
         :score = score
         :id = id
+        :image-modal= imageGraf
         @open-recipe="onClick"
+        :percent= perc
         />
-      </div>
-      <div class="h-full">
-        <GrafiekCard
-        :image = imageGraf
-        :percent = perc
-        />
-      </div>
-    </div>
 </template>
 
 
