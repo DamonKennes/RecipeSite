@@ -76,7 +76,11 @@ def generate_recommendation(user_id, model, metadata, thresh):
             recipe_id = get_recipe_id(recipe_name, metadata)
             return rating, recipe_id
         if time.time() > timeout:
-            return 0, 0
+            #return 0, 0
+            timeout+=1
+            thresh -=0.5
+        if thresh <= 0:
+            return 0,0
 
 
 def get_random_recipe(metadata):
