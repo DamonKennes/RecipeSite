@@ -67,7 +67,7 @@ def generate_recommendation(user_id, model, metadata, thresh):
     recipe_names = list(metadata['name'].values)
     random.shuffle(recipe_names)
 
-    seconds_till_timeout = 3.3
+    seconds_till_timeout = 1
     timeout = time.time() + seconds_till_timeout
 
     for recipe_name in recipe_names:
@@ -77,7 +77,7 @@ def generate_recommendation(user_id, model, metadata, thresh):
             return rating, recipe_id
         if time.time() > timeout:
             #return 0, 0
-            timeout+=1
+            timeout+=0.5
             thresh -=0.5
         if thresh <= 0:
             return 0,0
