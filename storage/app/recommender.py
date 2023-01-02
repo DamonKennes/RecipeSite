@@ -189,9 +189,15 @@ for user_id in users["id"]:
 
 cur = conn.cursor()
 for item in to_write:
-    sql = """insert into recommendations (user_id, recipe_id, image_url, certainty)
+    sql = """select * from recommendations where user_id=%s and recipe_id=%s"""
+    cur.execute(sql, (item[0], item[1])
+    if(cur.rowcount):
+        sql = """update recommendations set certainty=%s where user_id=%s and recipe_id=%s"""
+        cur.execute(sql, (item[0], item[1], 'storage/' + item[2], item[3]))
+    else:
+        sql = """insert into recommendations (user_id, recipe_id, image_url, certainty)
             values (%s, %s, %s, %s)"""
-    cur.execute(sql, (item[0], item[1], 'storage/' + item[2], item[3]))
+        cur.execute(sql, (item[0], item[1], 'storage/' + item[2], item[3]))
 conn.commit()
 print("DONE")
 
